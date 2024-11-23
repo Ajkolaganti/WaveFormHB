@@ -4,7 +4,7 @@ import { ShoppingCartIcon, HeartIcon } from '@heroicons/react/24/outline';
 import { useCart } from '../contexts/CartContext';
 
 const Navbar: React.FC = () => {
-  const { cart } = useCart();
+  const { items } = useCart();
 
   return (
     <nav className="bg-white shadow-md py-4">
@@ -25,9 +25,9 @@ const Navbar: React.FC = () => {
             </Link>
             <Link to="/cart" className="relative text-gray-600 hover:text-brand-secondary">
               <ShoppingCartIcon className="h-6 w-6" />
-              {cart.length > 0 && (
+              {items.length > 0 && (
                 <span className="absolute -top-2 -right-2 bg-brand-primary text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
-                  {cart.length}
+                  {items.length}
                 </span>
               )}
             </Link>

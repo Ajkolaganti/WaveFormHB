@@ -1,18 +1,18 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { CartProvider } from './contexts/CartContext';
 import HomePage from './pages/HomePage';
 import ProductsPage from './pages/ProductsPage';
 import ProductDetailPage from './pages/ProductDetailPage';
 import CartPage from './pages/CartPage';
 import CheckoutPage from './pages/CheckoutPage';
 import Navbar from './components/Navbar';
-import { CartProvider } from './contexts/CartContext';
 
-function App() {
+const App: React.FC = () => {
   return (
-    <Router>
-      <CartProvider>
-        <div className="min-h-screen bg-winter-white">
+    <CartProvider>
+      <Router>
+        <div className="min-h-screen bg-gray-50">
           <Navbar />
           <Routes>
             <Route path="/" element={<HomePage />} />
@@ -22,9 +22,9 @@ function App() {
             <Route path="/checkout" element={<CheckoutPage />} />
           </Routes>
         </div>
-      </CartProvider>
-    </Router>
+      </Router>
+    </CartProvider>
   );
-}
+};
 
 export default App;

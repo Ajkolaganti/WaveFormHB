@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useCart } from '../contexts/CartContext';
 
 const CheckoutPage: React.FC = () => {
-  const { cart, getTotalPrice } = useCart();
+  const { items, total, clearCart } = useCart();
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -27,10 +27,11 @@ const CheckoutPage: React.FC = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // TODO: Implement actual payment processing
+    clearCart();
     alert('Order Placed Successfully!');
   };
 
-  if (cart.length === 0) {
+  if (items.length === 0) {
     return (
       <div className="container mx-auto px-4 py-8 text-center">
         <h1 className="text-3xl font-bold mb-4">Your Cart is Empty</h1>
@@ -160,9 +161,9 @@ const CheckoutPage: React.FC = () => {
         {/* Order Summary */}
         <div>
           <h2 className="text-2xl font-bold mb-6">Order Summary</h2>
-          {cart.map((item, index) => (
+          {items.map((item, index) => (
             <div 
-              key={`${item.product.id}-${index}`} 
+              key={`${item.id}-${index}`} 
               className="flex justify-between items-center border-b py-4"
             >
               <div className="flex items-center">
@@ -174,9 +175,15 @@ const CheckoutPage: React.FC = () => {
                 <div>
                   <h3 className="font-semibold">{item.product.name}</h3>
                   <p className="text-gray-600">
-                    {item.selectedSize} | {item.selectedColor}
+                    Quantity: {item.quantity}
                   </p>
-                  <p>Qty: {item.quantity}</p>
+                  {(item.selectedSize || item.selectedColor) && (
+                    <p className="text-gray-600">
+                      {item.selectedSize && `Size: ${item.selectedSize}`}
+                      {item.selectedSize && item.selectedColor && ' | '}
+                      {item.selectedColor && `Color: ${item.selectedColor}`}
+                    </p>
+                  )}
                 </div>
               </div>
               <span className="font-bold">
@@ -188,7 +195,7 @@ const CheckoutPage: React.FC = () => {
           <div className="mt-6 space-y-4">
             <div className="flex justify-between">
               <span className="text-gray-600">Subtotal</span>
-              <span className="font-semibold">${getTotalPrice().toFixed(2)}</span>
+              <span className="font-semibold">${total.toFixed(2)}</span>
             </div>
             <div className="flex justify-between">
               <span className="text-gray-600">Shipping</span>
@@ -197,7 +204,7 @@ const CheckoutPage: React.FC = () => {
             <div className="flex justify-between border-t pt-4">
               <span className="text-xl font-bold">Total</span>
               <span className="text-xl font-bold text-brand-primary">
-                ${getTotalPrice().toFixed(2)}
+                ${total.toFixed(2)}
               </span>
             </div>
           </div>

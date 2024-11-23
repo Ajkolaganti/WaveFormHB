@@ -1,12 +1,12 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { PRODUCTS } from '../types/Product';
 import ProductCard from '../components/ProductCard';
-import { CartContext } from '../contexts/CartContext';
+import { useCart } from '../contexts/CartContext';
 import { FunnelIcon, XMarkIcon } from '@heroicons/react/24/outline';
 
 const ProductsPage: React.FC = () => {
-  const { addToCart } = useContext(CartContext);
+  const { addToCart } = useCart();
   const [priceFilter, setPriceFilter] = useState<string>('all');
   const [showFilters, setShowFilters] = useState(false);
 
